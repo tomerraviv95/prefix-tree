@@ -27,6 +27,9 @@ class Node:
     def set_word_end(self):
         self._is_word_end = True
 
+    def set_word_end_false(self):
+        self._is_word_end = False
+
     def is_word_end(self) -> bool:
         return self._is_word_end
 
@@ -82,6 +85,18 @@ class PrefixTree:
         if current_node.is_word_end():
             return True
         return False
+
+    @is_input_of_alphabet
+    def remove(self, word: str):
+        current_node = self.root
+        # iterating the word _letter-by-_letter
+        for i, letter in enumerate(word):
+            try:
+                # get the child of current node
+                current_node = current_node.get_child(letter)
+            except ValueError:
+                return False
+        current_node.set_word_end_false()
 
 
 class TestTree(unittest.TestCase):
